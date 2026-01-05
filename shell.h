@@ -12,4 +12,6 @@ char **split_line(char *line);
 int execute_args(char **args, char *prog_name);
 int new_process(char **args, char *prog_name);
 char *read_line(void);
+char *_getenv(char *name);
+char *find_path(char *cmd);
 #endif
