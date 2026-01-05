@@ -28,7 +28,7 @@ char *find_path(char *cmd)
 char *path = _getenv("PATH");
 char *path_copy, *token, *full_path;
 struct stat st;
-if (stat(cmd, &st) == 0)
+if (strchr(cmd, '/') != NULL && stat(cmd, &st) == 0)
 return (strdup(cmd));
 if (!path)
 return (NULL);
