@@ -47,7 +47,7 @@ int main(int ac, char **av)
 				if (path != NULL)
 				{
 					args[0] = path;
-					execute_args(args, av[0]);
+					exit_status = execute_args(args, av[0]);
 					free(path);
 				}
 				else
