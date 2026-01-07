@@ -47,6 +47,7 @@ int main(int ac, char **av)
 				if (path != NULL)
 				{
 					args[0] = path;
+					/* MODIFICATION CRUCIALE ICI : On capture le statut */
 					exit_status = execute_args(args, av[0]);
 					free(path);
 				}

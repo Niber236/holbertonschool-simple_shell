@@ -4,7 +4,7 @@
  * new_process - Lance la commande dans un processus enfant
  * @args: Arguments de la commande
  * @prog_name: Nom du programme (pour l'affichage d'erreur)
- * Return: 1
+ * Return: Code de retour de la commande
  */
 int new_process(char **args, char *prog_name)
 {
@@ -17,25 +17,29 @@ int new_process(char **args, char *prog_name)
 		if (execve(args[0], args, environ) == -1)
 		{
 			fprintf(stderr, "%s: 1: %s: Permission denied\n", prog_name, args[0]);
+			exit(126);
 		}
-		exit(EXIT_FAILURE);
+		exit(1);
 	}
 	else if (pid < 0)
 	{
 		perror("fork");
+		return (1);
 	}
 	else
 	{
 		wait(&status);
+		if (WIFEXITED(status))
+			return (WEXITSTATUS(status));
 	}
-	return (1);
+	return (0);
 }
 
 /**
  * execute_args - Wrapper pour new_process
  * @args: Arguments
  * @prog_name: Nom du programme
- * Return: 1
+ * Return: Code de retour
  */
 int execute_args(char **args, char *prog_name)
 {
