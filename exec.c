@@ -16,7 +16,8 @@ int new_process(char **args, char *prog_name)
 	{
 		if (execve(args[0], args, environ) == -1)
 		{
-			fprintf(stderr, "%s: 1: %s: Permission denied\n", prog_name, args[0]);
+			fprintf(stderr, "%s: 1: %s: Permission denied\n",
+				prog_name, args[0]);
 			exit(126);
 		}
 		exit(1);

@@ -15,6 +15,30 @@ void print_env(void)
 }
 
 /**
+ * path_handler - Gère la recherche et l'exécution de la commande
+ * @args: Arguments de la commande
+ * @av: Arguments du main
+ * @exit_status: Pointeur vers le statut de sortie
+ */
+void path_handler(char **args, char **av, int *exit_status)
+{
+	char *path;
+
+	path = find_path(args[0]);
+	if (path != NULL)
+	{
+		args[0] = path;
+		*exit_status = execute_args(args, av[0]);
+		free(path);
+	}
+	else
+	{
+		fprintf(stderr, "%s: 1: %s: not found\n", av[0], args[0]);
+		*exit_status = 127;
+	}
+}
+
+/**
  * main - Boucle principale du shell
  * @ac: Compteur d'arguments
  * @av: Tableau d'arguments
@@ -22,11 +46,8 @@ void print_env(void)
  */
 int main(int ac, char **av)
 {
-	char *line;
-	char **args;
-	char *path;
-	int status = 1;
-	int exit_status = 0;
+	char *line, **args;
+	int status = 1, exit_status = 0;
 
 	(void)ac;
 	while (status)
@@ -48,20 +69,7 @@ int main(int ac, char **av)
 			else if (strcmp(args[0], "env") == 0)
 				print_env();
 			else
-			{
-				path = find_path(args[0]);
-				if (path != NULL)
-				{
-					args[0] = path;
-					exit_status = execute_args(args, av[0]);
-					free(path);
-				}
-				else
-				{
-					fprintf(stderr, "%s: 1: %s: not found\n", av[0], args[0]);
-					exit_status = 127;
-				}
-			}
+				path_handler(args, av, &exit_status);
 		}
 		free(line);
 		free(args);
