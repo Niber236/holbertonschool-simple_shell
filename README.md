@@ -1,11 +1,6 @@
-![Uploading flowchart_anglais.png…]()
-
-
-
-
-
-
 # C - Simple Shell
+
+![Uploading flowchart_anglais 2.png…]()
 
 ## 📋 Description
 
